@@ -15,18 +15,14 @@ EOF
   #The quit option was given for ergonomics
  read  Reply
  case "$Reply" in "1")
-                           ./AddBiz
-#                      echo "Looking for results for $1"
-#                      results=`grep -i -n $1 employee.txt`
-#                      echo $results
+                       ./AddBiz #call the AddBiz script in order to add a business
                        ;;
-                  "2") addEntry #function to add a new employee
+                  "2")          #remove an existing business by calling the RmBiz script
                        ;;
-                  "3")./FindBiz
-		      sortEntry #function to sort the entries and print them to a sorted file 
+                  "3")./FindBiz #find an exisiting business(es) by calling the FindBiz script
                        ;;
-                  "4") 
-		       searchFromText #search the employees file for particular entries
+                  "4")
+		       #email business(es) from the address book
                          ;;
                   "q") echo "Goodbye and thanks"
                        exit
@@ -37,4 +33,9 @@ EOF
      esac
   sleep 1
 done
+
+#ToDo: add coding to link the main menu with RmBiz
+#ToDo: add coding to link the main menu with emailing one or many businesses
+#ToDo: clear up and add commenting and indentation
+#ToDo: allow a user to reurn to the main menu at any point
 

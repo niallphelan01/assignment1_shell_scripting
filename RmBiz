@@ -1,2 +1,6 @@
 #!/bin/bash
 #removal of business script file
+#ToDo: add coding to remove a business based upon business name or contact name
+#Todo: add commenting on the file
+#Todo: when removing the  business information from the file add it to a deleted file (to be able to review deleted information
+

@@ -1,5 +1,8 @@
 #!/bin/bash
 # Adding businesses script file
+#Todo: add the required comments
+#Todo: input validation
+#Todo: check for duplication of listings
 echo "--------"
 echo "Please enter the Company name"
 read companyname
