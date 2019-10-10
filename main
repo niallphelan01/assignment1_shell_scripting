@@ -1,0 +1,37 @@
+#!/bin/bash
+#main script file with menu structure
+while :
+do
+  cat <<EOF
+ 
+  Welcome. Please Choose from one of the following
+  (1) "Add a new Business"
+  (2) "Remove an existing Business"
+  (3) "Search for a Business"
+  (4) "E-mail Business(es)"
+  (q) "Quit"
+  Enter a number
+EOF
+ read  Reply
+ case "$Reply" in "1")
+                           ./AddBiz
+#                      echo "Looking for results for $1"
+#                      results=`grep -i -n $1 employee.txt`
+#                      echo $results
+                       ;;
+                  "2") addEntry #function to add a new employee
+                       ;;
+                  "3") sortEntry #function to sort the entries and print them to a sorted file 
+                       ;;
+                  "4") searchFromText #search the employees file for particular entries
+                         ;;
+                  "q") echo "Goodbye and thanks"
+                       exit
+                       ;;
+                  *) echo "invalid option"
+                       waitAndClear #wait and clear the display to aid with less clutter
+                       ;;
+     esac
+  sleep 1
+done
+

@@ -1,0 +1,18 @@
+#!/bin/bash
+# Adding businesses script file
+echo "--------"
+echo "Please enter the Company name"
+read companyname
+echo "Please enter the persons full name"
+read fullname
+echo "Please enter the address"
+read address
+echo "Please enter the mobile number"
+read mobile
+echo "Please enter the email address"
+read emailaddress
+echo "The following details have been added"
+echo "$companyname $fullname $address $mobile $emailaddress"
+echo "$companyname $fullname $address $mobile $emailaddress" >> BusinessDetails
+
+
