@@ -1,2 +1,3 @@
 #!/bin/bash
 #This file uses code to analyse the Business Details file to help the user to find business(es) based upon search criteria
+echo "Thanks for trying to search for a business"

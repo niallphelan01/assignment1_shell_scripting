@@ -9,9 +9,10 @@ do
   (2) "Remove an existing Business"
   (3) "Search for a Business"
   (4) "E-mail Business(es)"
-  (q) "Quit"
-  Enter a number
+  (q) "quit application" 
+  Enter a number:
 EOF
+  #The quit option was given for ergonomics
  read  Reply
  case "$Reply" in "1")
                            ./AddBiz
@@ -21,9 +22,11 @@ EOF
                        ;;
                   "2") addEntry #function to add a new employee
                        ;;
-                  "3") sortEntry #function to sort the entries and print them to a sorted file 
+                  "3")./FindBiz
+		      sortEntry #function to sort the entries and print them to a sorted file 
                        ;;
-                  "4") searchFromText #search the employees file for particular entries
+                  "4") 
+		       searchFromText #search the employees file for particular entries
                          ;;
                   "q") echo "Goodbye and thanks"
                        exit
