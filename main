@@ -1,5 +1,10 @@
 #!/bin/bash
 #main script file with menu structure
+function waitAndClear
+{
+sleep 1
+clear
+}
 while :
 do
   cat <<EOF

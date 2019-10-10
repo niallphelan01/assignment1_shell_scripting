@@ -6,14 +6,44 @@
 echo "--------"
 echo "Please enter the Company name"
 read companyname
+while [ -z "$companyname" ] #while loop to take care of a null entry
+do
+      echo "Company Name is empty, please re-enter a value"
+      read companyname
+done
 echo "Please enter the persons full name"
 read fullname
+while [ -z "$fullname" ] #while loop to take care of a null entry
+do
+      echo "The persons name is empty, please re-enter a value"
+      read fullname
+done
 echo "Please enter the address"
 read address
+while [ -z "$address" ] #while loop to take care of a null entry
+do
+      echo "The Address is empty, please re-enter a value"
+      read address
+done
 echo "Please enter the mobile number"
 read mobile
+while [ -z "$mobile" ] #while loop to take care of a null entry
+do
+      echo "The mobile number is empty, please re-enter a value"
+      read mobile
+done
 echo "Please enter the email address"
 read emailaddress
+while [ -z "$emailaddress" ] || [ "$emailaddress" != "${emailaddress/ /}" ]
+do
+      echo "The email address is empty or contains spaces ($emailaddress), please re-enter a value"
+      read emailaddress
+done
+#if [[ "$emailaddress" != "${emailaddress/ /}" ]]
+#then
+#    echo "The email address contains space(s), please re-enter a value"
+#    read emailaddress
+#fi 
 echo "The following details have been added"
 echo "$companyname $fullname $address $mobile $emailaddress"
 echo "$companyname $fullname $address $mobile $emailaddress" >> BusinessDetails
