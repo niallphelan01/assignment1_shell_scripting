@@ -3,4 +3,30 @@
 #ToDo: add coding to remove a business based upon business name or contact name
 #Todo: add commenting on the file
 #Todo: when removing the  business information from the file add it to a deleted file (to be able to review deleted information
+while :
+do
 
+  cat <<EOF
+ 
+  Please choose to remove a Business based upon:
+  (1) "Business name"
+  (2) "Business contact"
+  (q) "return to main menu" 
+  Please make a selection:
+EOF
+  #The quit option was given for ergonomics
+ read  Reply
+ case "$Reply" in "1") #find business by business name
+		       #add functionality
+                       ;;
+                   "2") #find business by contact name
+		       #add functionality
+                       ;;
+                  "q") echo "back to the main menu"
+                       exit
+                       ;;
+                  *) echo "invalid option"
+                       ;;
+     esac
+  sleep 1
+done
