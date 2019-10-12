@@ -45,7 +45,7 @@ done
 #    read emailaddress
 #fi 
 echo "The following details have been added"
-echo "$companyname $fullname $address $mobile $emailaddress \n"
-echo "$companyname $fullname $address $mobile $emailaddress \n" >> BusinessDetails
+echo "$companyname $fullname $address $mobile $emailaddress"
+echo "$companyname $fullname $address $mobile $emailaddress" >> BusinessDetails
 
 
