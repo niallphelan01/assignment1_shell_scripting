@@ -1,9 +1,39 @@
 #!/bin/bash
 #main script file with menu structure
-function waitAndClear
+function emailBusiness
 {
-sleep 1
-clear
+   while [ "$ReplyEmail" != "q" ] #if q is selected then the while condition is met and the loop ends
+do
+  cat <<EOF
+ 
+  Email menu
+  (1) "Email a single Business"
+  (2) "Email all Businesses"
+  (q) "quit emailing" 
+  Enter a selection:
+EOF
+  #The quit option was given for ergonomics
+ read  ReplyEmail
+ case "$ReplyEmail" in "1")
+			 echo "email a single business"
+			 #code to email a single business
+                         ;;
+                   "2") echo "email all businesses"
+			#code to email all businesses
+                       ;;
+                   "q") #exit the emailing of businesses
+                          
+		       ;;
+                    *) echo "invalid option"
+                       waitAndClear #wait and clear the display to aid with less clutter
+                       ;;
+     esac
+   done
+}
+function waitAndClear #function to clear the display after 1 second
+{
+   sleep 1
+   clear
 }
 while :
 do
@@ -26,7 +56,7 @@ EOF
                        ;;
                   "3")./FindBiz #find an exisiting business(es) by calling the FindBiz script
                        ;;
-                  "4")
+                  "4")emailBusiness
 		       #email business(es) from the address book
                          ;;
                   "q") echo "Goodbye and thanks"
