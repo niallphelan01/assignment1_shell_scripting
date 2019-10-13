@@ -2,7 +2,11 @@
 #main script file with menu structure
 function emailBusiness
 {
-   while [ "$ReplyEmail" != "q" ] #if q is selected then the while condition is met and the loop ends
+    echo "Please enter the message you would like to send to the Business(es)"
+    read message
+    echo "Please enter the message subject"
+    read subject
+    while [ "$ReplyEmail" != "q" ] #if q is selected then the while condition is met and the loop ends
 do
   cat <<EOF
  
@@ -15,10 +19,32 @@ EOF
   #The quit option was given for ergonomics
  read  ReplyEmail
  case "$ReplyEmail" in "1")
-			 echo "email a single business"
+			   echo "Search for the business by entering any details"
+			   read searchparm
+			   result=`grep -i -n "$searchparm" BusinessDetails`
+			   echo "$result"
+			   echo "which line number do you wish to email: or q to quit"
+			   read line
+			   if [ "$line" == "q" ]  
+			   then
+			       : #do nothing
+			   else
+			      
+			      emailaddress=$(awk -v awk_line=$line 'FNR == awk_line {print $5}' BusinessDetails)
+			      echo $message | mail -s $subject "$emailaddress"
+			      echo "email sent to $emailaddress"
+			   fi
 			 #code to email a single business
                          ;;
-                   "2") echo "email all businesses"
+			"2")
+
+			    while read -r line
+			       do
+			       emailaddress=$(echo $line| awk '{print $5}')
+			       echo $message | mail -s $subject "$emailaddress"
+			       echo "email sent to $emailaddress"
+                            done < BusinessDetails	
+			    
 			#code to email all businesses
                        ;;
                    "q") #exit the emailing of businesses
