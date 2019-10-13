@@ -2,10 +2,7 @@
 #main script file with menu structure
 function emailBusiness
 {
-    echo "Please enter the message you would like to send to the Business(es)"
-    read message
-    echo "Please enter the message subject"
-    read subject
+   
     while [ "$ReplyEmail" != "q" ] #if q is selected then the while condition is met and the loop ends
 do
   cat <<EOF
@@ -18,7 +15,7 @@ do
 EOF
   #The quit option was given for ergonomics
  read  ReplyEmail
- case "$ReplyEmail" in "1")
+ case "$ReplyEmail" in "1") #code to email a single business
 			   echo "Search for the business by entering any details"
 			   read searchparm
 			   result=`grep -i -n "$searchparm" BusinessDetails`
@@ -30,26 +27,30 @@ EOF
 			       : #do nothing
 			   else
 			      
-			      emailaddress=$(awk -F ":" -v awk_line=$line 'FNR == awk_line {print $5}' BusinessDetails)
-			      echo $message | mail -s $subject "$emailaddress"
-			      echo "email sent to $emailaddress"
-			   fi
-			 #code to email a single business
-                         ;;
-			"2")
-
-			    while read -r line
-			       do
-				   emailaddress=$(echo $line| awk -F ":" '{print $5}')
-				   #pipe the contents of the line to awk to print the contents of column 5 and assign this to the variable emailaddress
+			       emailaddress=$(awk -F ":" -v awk_line=$line 'FNR == awk_line {print $5}' BusinessDetails)
+			       echo "Please enter the message subject"
+			       read subject
+			       echo "Please enter the message you would like to send to the Business(es)"
+			       read message
 			       echo $message | mail -s $subject "$emailaddress"
 			       echo "email sent to $emailaddress"
-                            done < BusinessDetails	
+			   fi 
+                         ;;
+			"2")#code to email all businesses
 			    
-			#code to email all businesses
+			     echo "Please enter the message subject"
+			     read subject
+			     echo "Please enter the message you would like to send to the Business(es)"
+			     read message
+			     while read -r line
+			     do
+				 emailaddress=$(echo $line| awk -F ":" '{print $5}')
+				 #pipe the contents of the line to awk to print the contents of column 5 and assign this to the variable emailaddress
+				 echo $message | mail -s $subject "$emailaddress"
+			         echo "email sent to $emailaddress"
+                            done < BusinessDetails	
                        ;;
-                   "q") #exit the emailing of businesses
-                          
+                   "q") #exit the emailing of businesses 
 		       ;;
                     *) echo "invalid option"
                        waitAndClear #wait and clear the display to aid with less clutter
@@ -95,9 +96,4 @@ EOF
      esac
   sleep 1
 done
-
-#ToDo: add coding to link the main menu with RmBiz
-#ToDo: add coding to link the main menu with emailing one or many businesses
 #ToDo: clear up and add commenting and indentation
-#ToDo: allow a user to reurn to the main menu at any point
-
