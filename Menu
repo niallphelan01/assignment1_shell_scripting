@@ -30,7 +30,7 @@ case "$ReplyEmail" in "1") #code to email a single business
 			      read subject
 			      echo "Please enter the message you would like to send to the Business(es)"
 			      read message
-			      echo $message | mail -s $subject "$emailaddress"
+			      echo "$message" | mail -s "$subject" "$emailaddress"
 			      echo "email sent to $emailaddress"
 			  fi 
                           ;;
@@ -43,7 +43,7 @@ case "$ReplyEmail" in "1") #code to email a single business
 			   do
 			       emailaddress=$(echo $line| awk -F ":" '{print $5}')
 			       #pipe the contents of the line to awk to print the contents of column 5 and assign this to the variable emailaddress
-			       echo $message | mail -s $subject "$emailaddress"
+			       echo "$message" | mail -s "$subject" "$emailaddress"
 			       echo "email sent to $emailaddress"
                            done < BusinessDetails	
 			   ;;
