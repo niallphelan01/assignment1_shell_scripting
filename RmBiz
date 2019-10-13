@@ -1,14 +1,11 @@
 #!/bin/bash
-#removal of business script file
-#ToDo: add coding to remove a business based upon business name or contact name
-#Todo: add commenting on the file
-#Todo: when removing the  business information from the file add it to a deleted file (to be able to review deleted information
+#RmBiz script is used to remove businesses based upon Business name or contact name. I've also added the feature to backup via a tar file
 backupBusinesses()
 {
     BACKUPTIME=`date +%d-%b-%Y-%H-%M` #get the current date
     tar -cf $BACKUPTIME.tar BusinessDetails
     echo "$BACKUPTIME.tar created in the local directory"
-    }
+}
 searchByBusiness()
 {
     echo "Please enter the business name (case sensitive)" #example of case sensitive
@@ -20,7 +17,6 @@ searchByBusiness()
 	echo "Search revealed no Business(es), please enter new search criteria"
 	read searchparm
 	result=$(awk -F ":" -v awk_search="$searchparm" '$1~ awk_search {print NR":" $0}' BusinessDetails)
-	
     done
     echo "$result"
     sleep 0.5 #wait 0.5 seconds
@@ -34,16 +30,15 @@ searchByBusiness()
     done
     noOfLines=$(sed -n \$= BusinessDetails) #get the number of lines in the Business details file
     while [[ $line -gt $noOfLines ]]  #check that the number entered isnt above the number of lines
-	do
-	    echo "Please enter the line number again, there are $noOfLines lines, zero to exit"
-	    read line
+    do
+	echo "Please enter the line number again, there are $noOfLines lines, zero to exit"
+	read line
     done
     if [[ $line -gt "0" ]]
     then
 	sed -i "$line"'d' BusinessDetails
 	echo "Business deleted"
-    fi
-	   
+    fi	   
 }
 searchByContactName()
 {
@@ -55,8 +50,7 @@ searchByContactName()
     do
 	echo "Search revealed no Business(es), please enter new search criteria"
 	read searchparm
-	result=$(awk -F ":" -v awk_search="$searchparm" '$2~ awk_search {print NR":" $0}' BusinessDetails)
-	
+	result=$(awk -F ":" -v awk_search="$searchparm" '$2~ awk_search {print NR":" $0}' BusinessDetails)	
     done
     echo "$result"
     sleep 0.5 #wait 0.5 seconds
@@ -73,12 +67,12 @@ searchByContactName()
 	do
 	    echo "Please enter the line number again, there are $noOfLines lines, zero to exit"
 	    read line
-	done
-	if [[ $line -gt "0" ]]
-	then
-	    sed -i "$line"'d' BusinessDetails
-	    echo "Business deleted"
-	fi
+    done
+    if [[ $line -gt "0" ]]
+    then
+	sed -i "$line"'d' BusinessDetails
+	echo "Business deleted"
+    fi
 }
 while :
 do
@@ -94,19 +88,18 @@ EOF
   #The quit option was given for ergonomics
  read  Reply
  case "$Reply" in "1") searchByBusiness
-		  #find business by business name
+		       #find business by business name
                        ;;
-		   
                    "2")
 		       searchByContactName
-			#find business by contact name
+		       #find business by contact name
                        ;;
 		   "3")backupBusinesses #backs up the businesses to a tar file with given date and time
 		       ;;
-                  "q") echo "back to the main menu"
-                       exit
-                       ;;
-                  *) echo "invalid option"
+                   "q") echo "back to the main menu"
+			exit
+			;;
+                   *) echo "invalid option"
                        ;;
      esac
   sleep 1

@@ -1,7 +1,5 @@
 #!/bin/bash
 #This file uses code to analyse the Business Details file to help the user to find business(es) based upon search criteria
-#Todo:  search for business(es) based upon any business information and display to the screen
-#Todo: indent and comment on code for this functionality
 
 echo "Please enter the details that you want to search from:"
 read searchparm
@@ -17,5 +15,6 @@ else
     echo "$result"
     echo "--------------------------------"
 fi
-read -n1 -rsp $'Press and key to continue back to the main menu \n' #wait for a character press to continue back to the main menu
+read -n1 -rsp $'Press and key to continue back to the main menu \n'
+#wait for a character press to continue back to the main menu
 
