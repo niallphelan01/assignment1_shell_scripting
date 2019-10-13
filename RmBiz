@@ -3,25 +3,79 @@
 #ToDo: add coding to remove a business based upon business name or contact name
 #Todo: add commenting on the file
 #Todo: when removing the  business information from the file add it to a deleted file (to be able to review deleted information
-searchByBusiness(){
-    echo "Please enter the business name"
+searchByBusiness()
+{
+    echo "Please enter the business name (case sensitive)" #example of case sensitive
     read searchparm
-    result=`grep -i -n $searchparm BusinessDetails` #move to to being a awk/sed lookup
-    echo $result
+    result=$(awk -F ":" -v awk_search="$searchparm" '$1~ awk_search {print NR":" $0}' BusinessDetails)
+    #search for the searchparm variable in field 1 (business name) and print out the line number and the details
+    while [ -z "$result" ]
+    do
+	echo "Search revealed no Business(es), please enter new search criteria"
+	read searchparm
+	result=$(awk -F ":" -v awk_search="$searchparm" '$1~ awk_search {print NR":" $0}' BusinessDetails)
+	
+    done
+    echo "$result"
     sleep 0.5 #wait 0.5 seconds
-    echo "which line number do you wish to delete, or q to quit"
-    read line
-    if [ "$line" == "q" ]  
+    unset line
+    while [[ ! ${line} =~ ^[0-9]+$ ]] #check for a valid input (numberical)
+    do
+	#get input from the user until its correct
+	#https://stackoverflow.com/questions/848342/check-user-input-is-correct/24085193#24085193
+        echo "which line number do you wish to delete, zero to exit"
+        read line
+    done
+    noOfLines=$(sed -n \$= BusinessDetails) #get the number of lines in the Business details file
+    while [[ $line -gt $noOfLines ]]  #check that the number entered isnt above the number of lines
+	do
+	    echo "Please enter the line number again, there are $noOfLines lines, zero to exit"
+	    read line
+    done
+    if [[ $line -gt "0" ]]
     then
-	: #do nothing
-    else
-       sed -i "$line"'d' BusinessDetails
-       echo "Business deleted"
-       fi
-    } 
+	sed -i "$line"'d' BusinessDetails
+	echo "Business deleted"
+    fi
+	   
+}
+searchByContactName()
+{
+    echo "Please enter the contact name (case sensitive)" #example of case insensitive
+    read searchparm
+    result=$(awk -F ":" -v awk_search="$searchparm" '$2~ awk_search {print NR":" $0}' BusinessDetails)
+    #search for the searchparm variable in field 1 (business name) and print out the line number and the details
+    while [ -z "$result" ]
+    do
+	echo "Search revealed no Business(es), please enter new search criteria"
+	read searchparm
+	result=$(awk -F ":" -v awk_search="$searchparm" '$2~ awk_search {print NR":" $0}' BusinessDetails)
+	
+    done
+    echo "$result"
+    sleep 0.5 #wait 0.5 seconds
+    unset line
+    while [[ ! ${line} =~ ^[0-9]+$ ]] #check for a valid input (numberical)
+    do
+	#get input from the user until its correct
+	#https://stackoverflow.com/questions/848342/check-user-input-is-correct/24085193#24085193
+        echo  "which line number do you wish to delete, zero to exit"
+        read line
+    done
+    noOfLines=$(sed -n \$= BusinessDetails) #get the number of lines in the Business details file
+    while [[ $line -gt $noOfLines ]]  #check that the number entered isnt above the number of lines
+	do
+	    echo "Please enter the line number again, there are $noOfLines lines, zero to exit"
+	    read line
+	done
+	if [[ $line -gt "0" ]]
+	then
+	    sed -i "$line"'d' BusinessDetails
+	    echo "Business deleted"
+	fi
+}
 while :
 do
-
   cat <<EOF
  
   Please choose to remove a Business based upon:
@@ -34,10 +88,9 @@ EOF
  read  Reply
  case "$Reply" in "1") searchByBusiness
 		  #find business by business name
-		       #add functionality
                        ;;
-                   "2") #find business by contact name
-		       #add functionality
+                   "2") searchByContactName
+			#find business by contact name
                        ;;
                   "q") echo "back to the main menu"
                        exit
