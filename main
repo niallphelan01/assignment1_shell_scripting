@@ -30,7 +30,7 @@ EOF
 			       : #do nothing
 			   else
 			      
-			      emailaddress=$(awk -v awk_line=$line 'FNR == awk_line {print $5}' BusinessDetails)
+			      emailaddress=$(awk -F ":" -v awk_line=$line 'FNR == awk_line {print $5}' BusinessDetails)
 			      echo $message | mail -s $subject "$emailaddress"
 			      echo "email sent to $emailaddress"
 			   fi
@@ -40,7 +40,8 @@ EOF
 
 			    while read -r line
 			       do
-			       emailaddress=$(echo $line| awk '{print $5}')
+				   emailaddress=$(echo $line| awk -F ":" '{print $5}')
+				   #pipe the contents of the line to awk to print the contents of column 5 and assign this to the variable emailaddress
 			       echo $message | mail -s $subject "$emailaddress"
 			       echo "email sent to $emailaddress"
                             done < BusinessDetails	
