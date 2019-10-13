@@ -4,11 +4,18 @@
 #Todo: indent and comment on code for this functionality
 
 echo "Please enter the details that you want to search from:"
-   read searchparm
-   result=`grep -i -n "$searchparm" BusinessDetails`
-   echo "The result(s) are the following"
-   echo "--------------------------------"
-   echo "$result"
-   echo "--------------------------------"
-   read -n1 -rsp $'Press and key to continue back to the main menu \n' #wait for a character press to continue back to the main menu
+read searchparm
+result=`grep -i -n "$searchparm" BusinessDetails`
+if [ -z "$result" ]
+then
+    echo "No results found"
+else
+    echo "The result(s) are the following"
+    echo "--------------------------------"
+    echo "Business name: Contact: Address: Mobile: Email"
+    echo "--------------------------------"
+    echo "$result"
+    echo "--------------------------------"
+fi
+read -n1 -rsp $'Press and key to continue back to the main menu \n' #wait for a character press to continue back to the main menu
 
